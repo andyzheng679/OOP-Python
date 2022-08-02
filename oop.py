@@ -1,3 +1,5 @@
+import csv
+
 class Item:
     pay_rate = 0.8 # 20% off discount
     all =[]
@@ -20,27 +22,29 @@ class Item:
     def apply_discount(self):
         self.price = self.price * self.pay_rate  
 
+    @classmethod
+    def instantiate_from_csv(cls):
+        with open('items.csv', 'r') as f:
+            reader = csv.DictReader(f)
+            items = list(reader)
+        
+        for item in items:
+            Item(
+                name=item.get('name'),
+                price=float(item.get('price')),
+                quantity=int(item.get('quantity'))
+            )
+
+    @staticmethod
+    def is_integer(num):
+        if isinstance(num, float):
+            return num.is_integer()
+        elif isinstance(num, int):
+            return True
+        else:
+            return False
+
     def __repr__(self) -> str:
         return f"Item('{self.name}', {self.price}, {self.quantity})"
 
-
-
-item1 = Item("Phone" , 100, 5)
-item2 = Item("Laptop", 1000, 3)
-item3 = Item("Cable", 10, 5)
-item4 = Item("Mouse", 50, 5)
-item5 = Item("Keyboard", 70, 5)
-
-#item2.pay_rate = 0.7
-
-#item1.apply_discount()
-#print(item1.price)
-
-#item2.apply_discount()
-#print(item2.price)
-
-print(Item.all)
-
-for instance in Item.all:
-    print(instance.name)
-
+print(Item.is_integer(7.0))
