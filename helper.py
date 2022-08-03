@@ -20,14 +20,3 @@ class Item:
 item1 = Item()
 item1.is_integer()
 item1.instantiate_from_csv()
-
-
-
-
-def test(x, y):
-    z = x + y
-    return z
-
-testing = test
-
-print(testing(1, 2))
