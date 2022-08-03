@@ -3,18 +3,26 @@ import csv
 class Item:
     pay_rate = 0.8 # 20% off discount
     all =[]
-    def __init__(self, name: str, price: float, quantity: int):
+    def __init__(self, name: str, price: float, quantity=0):
         # checks parameter
         assert price >= 0, f"Price {price} is not greater than or equal to zero"
         assert quantity >= 0, f"Quantity {quantity} is not greater than or equal to zero"
 
-        self.name = name
+        self.__name = name
         self.price = price
         self.quantity = quantity
 
         # Actions to execute
         Item.all.append(self)
 
+    # property decorator = Read-Only Attribute
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        self.__name = value
 
     def calculate_total_price(self) -> int:
         return self.price * self.quantity
@@ -46,3 +54,4 @@ class Item:
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}('{self.name}', {self.price}, {self.quantity})"
+
